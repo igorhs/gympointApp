@@ -6,9 +6,11 @@ import databaseConfig from '../config/database';
 
 import Admin from '../app/models/Admin';
 import Students from '../app/models/Students';
+import Memberships from '../app/models/Memberships';
+import Registrations from '../app/models/Registrations';
+import Checkins from '../app/models/Checkins';
 
-const modelAdmin = [Admin];
-const modelStudents = [Students];
+const models = [Admin, Students, Memberships, Registrations, Checkins];
 
 class Database {
   constructor() {
@@ -17,9 +19,9 @@ class Database {
 
   init() {
     this.connection = new Sequelize(databaseConfig);
-
-    modelAdmin.map(model => model.init(this.connection));
-    modelStudents.map(model => model.init(this.connection));
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 
