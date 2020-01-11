@@ -23,29 +23,47 @@ class CheckinController {
       return res.status(400).json({ error: 'Invalid date.' });
     }
 
-    console.log(date);
-
-    const countCheckins = await Checkins.findAll({
+    const countCheckins = await Checkins.findAndCountAll({
       where: {
-        student_id: checkRegistration,
-        [Op.between]: [startOfWeek(parseISO(date)), endOfWeek(parseISO(date))],
+        student_id: checkRegistration.student_id,
       },
-      limit: 5,
+      [Op.between]: [startOfWeek(parseISO(date)), endOfWeek(parseISO(date))],
     });
 
-    console.log(countCheckins);
-
-    if (countCheckins.count() > 5) {
+    if (countCheckins.count > 4) {
       return res
         .status(400)
         .json({ error: 'You exceeded entrance number in a week.' });
     }
 
     const checkin = await Checkins.create({
-      student_id: checkRegistration,
+      student_id: checkRegistration.student_id,
     });
 
     return res.json(checkin);
+  }
+
+  async index(req, res) {
+    const checkRegistration = await Registration.findOne({
+      where: {
+        student_id: req.params.id,
+      },
+    });
+
+    if (!checkRegistration) {
+      return res.status(400).json({
+        error:
+          'This registration does not exist. Please, register so you can check in the gym.',
+      });
+    }
+
+    const listCheckins = await Checkins.findAll({
+      where: {
+        student_id: checkRegistration.student_id,
+      },
+    });
+
+    return res.json(listCheckins);
   }
 }
 

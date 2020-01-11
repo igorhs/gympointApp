@@ -9,8 +9,16 @@ import Students from '../app/models/Students';
 import Memberships from '../app/models/Memberships';
 import Registrations from '../app/models/Registrations';
 import Checkins from '../app/models/Checkins';
+import HelpOrders from '../app/models/HelpOrders';
 
-const models = [Admin, Students, Memberships, Registrations, Checkins];
+const models = [
+  Admin,
+  Students,
+  Memberships,
+  Registrations,
+  Checkins,
+  HelpOrders,
+];
 
 class Database {
   constructor() {
