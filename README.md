@@ -1,5 +1,5 @@
 # Gympoint
-This application was built with Node.js using Express and the Sucrase + Nodemon, ESLint + Prettier + EditorConfig, Sequelize (PostgreSQL) tools.
+This application was built with Node.js using Express and the Sucrase + Nodemon, ESLint + Prettier + EditorConfig, Sequelize, and PostgreSQL through Docker tools.
 
 Authentication through JWT and data validation were applied on Login session;
 
